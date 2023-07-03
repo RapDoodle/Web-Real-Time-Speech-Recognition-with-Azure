@@ -40,9 +40,10 @@
     });
 
     let socket = null;
-    let mediaRecorder;
+    let mediaRecorder = null;
     let audioChunks = [];
     let sendDataIntervalId;
+    let currStream = null;
 
     const toggleRecordingStatus = (recording) => {
       if (recording) {
@@ -67,6 +68,7 @@
         socket.emit('init', {
           language: langSelect.value
         });
+        currStream = stream;
         socket.on('ready', () => {
           // Start recording after the server is ready
           mediaRecorder = new MediaStreamRecorder(stream);
@@ -93,13 +95,17 @@
 
     stopButton.onclick = () => {
       mediaRecorder.stop();
+      currStream.getTracks().forEach((track) => {
+        track.stop();
+      });
+      currStream = null;
       socket.disconnect();
       socket = null;
       toggleRecordingStatus(false);
     }
 
     saveButton.onclick = () => {
-      mediaRecorder.save()
+      mediaRecorder.save();
     }
   </script>
 </body>
