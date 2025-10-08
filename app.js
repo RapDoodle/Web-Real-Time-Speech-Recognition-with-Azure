@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
       // Convert whatever wav to 16kHz wav
       let wav = new WaveFile(data);
       wav.toSampleRate(16000);
-      audioStream.write(wav.toBuffer());
+      audioStream.write(wav.getSamples(true, Int16Array).buffer);
     });
   
     recognizer.recognizing = function (s, e) {

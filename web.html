@@ -10,7 +10,6 @@
 <body>
   <button id="start-btn">Start Recording</button>
   <button id="stop-btn" disabled>Stop Recording</button>
-  <button id="save-btn">Save Recording</button>
   <select id="lang-select"></select>
   <p id="status">Not recording</p>
   <p>Transcript:</p>
@@ -22,7 +21,6 @@
 
     const startButton = document.getElementById('start-btn');
     const stopButton = document.getElementById('stop-btn');
-    const saveButton = document.getElementById('save-btn');
     const langSelect = document.getElementById('lang-select')
     const statusParagraph = document.getElementById('status');
     const transcriptDiv = document.getElementById('transcript');
@@ -102,10 +100,6 @@
       socket.disconnect();
       socket = null;
       toggleRecordingStatus(false);
-    }
-
-    saveButton.onclick = () => {
-      mediaRecorder.save();
     }
   </script>
 </body>
